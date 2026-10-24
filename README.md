@@ -31,13 +31,36 @@ Your solution must:
 - Generate one prediction row for every request in `dataset/deletion_requests.csv`
 - Write the final predictions to `output.csv` in the repository root
 
+The Python solution extracts searchable PDF/image evidence locally and does not require a hosted model or API key. Install its extraction dependencies once:
+
+```bash
+python3 -m pip install -r code/requirements.txt
+```
+
 Run the starter Python entry point with:
 
 ```bash
 python3 code/main.py
 ```
 
+Evaluate against the public sample answers and run the custom checks with:
+
+```bash
+python3 code/main.py --requests dataset/sample_deletion_requests.csv --output /tmp/sample_output.csv
+python3 code/evaluation/main.py --expected dataset/sample_output.csv --actual /tmp/sample_output.csv
+python3 -m unittest discover -s code/evaluation
+```
+
 The blank template at `dataset/output.csv` is provided as a reference. Your final generated file for submission must be the root-level `output.csv`.
+
+Evaluation results and the local usage breakdown are documented in
+[`code/evaluation/evaluation_report.md`](./code/evaluation/evaluation_report.md) and
+[`code/evaluation/usage_report.md`](./code/evaluation/usage_report.md). To create the
+submission archive after generating the output, run:
+
+```bash
+zip -r code.zip README.md code -x '*/__pycache__/*' '*.pyc'
+```
 
 
 ## Dataset
